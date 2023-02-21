@@ -1,0 +1,23 @@
+extends layout 
+
+block content 
+   h1 Search Ongoing Courses
+
+   form(method="post")
+      label(for="id") ID: 
+      input(type="text", name="id")
+      br
+      br
+      label(for="name") Name: 
+      input(type="text", name="name")
+      br
+      br
+      label(for="department") Department: 
+      input(type="text", name="department")
+      br
+      br
+      label(for="isOpen") Course is Open:
+      input(type="checkbox", name="isOpen")
+      br
+      br
+      button(type="submit") Search
