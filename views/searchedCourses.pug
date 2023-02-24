@@ -1,13 +1,12 @@
-extends layout 
+extends layout
 
 block content 
-   h1 Courses Found 
-   h1 #{body.id}
-   h1 #{body.name}
-   h1 #{body.department}
-   h1 #{body.isOpen}
+   h1 Courses Found
 
-   id= body.id
-   if(id!=null)
-      h1 holi
+   for course in courses 
+      h4 Course ID: #{course.id}
+      li Name: #{course.name}
+      li Department: #{course.department}
+      li Description: #{course.description}
+      li Remaining Seats: #{course.remainingSeats}
    

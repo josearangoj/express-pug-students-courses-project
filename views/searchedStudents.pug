@@ -1,0 +1,12 @@
+extends layout
+
+block content 
+   h1 Students Found
+
+   for student in students
+      h2 Student ID: #{student.id}
+      ul
+         li Name: #{student.name}
+         li Department: #{student.department}
+         li Semester: #{student.semester}
+         li GPA: #{student.calculateGPA()}%

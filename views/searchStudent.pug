@@ -1,0 +1,23 @@
+extends layout 
+
+block content 
+   h1 Search Students by course information
+
+   form(method="post")
+      label(for="id") Course ID: 
+      input(type="text", name="id")
+      br
+      br
+      label(for="name") Course Name: 
+      input(type="text", name="name")
+      br
+      br
+      label(for="enrolledCourse") Enrolled Course:
+      input(type="checkbox", name="enrolledCourse")
+      br
+      br
+      label(for="completedCourse") Completed Course:
+      input(type="checkbox", name="completedCourse")
+      br
+      br
+      button(type="submit") Search

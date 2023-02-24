@@ -24,7 +24,6 @@ let students = [
     [
       new CompletedCourse("C104", "Stadistics", "Exact Sciences", "Descriptive Stadistics", 90),
       new CompletedCourse("C106", "Machine Learning", "IT", "Machine learning basics with final project", 88),
-      new CompletedCourse("C103", "Maths", "Exact Sciences", "Basic calculus", 92),
       new CompletedCourse("C108", "Web Design Basics", "IT", "HTML, CSS and Javascript", 98),
     ]),
   new Student(101, "David", "IT", 2, [0, 4, 3, 1].map(x => onGoingCourses[x]),
@@ -32,7 +31,7 @@ let students = [
       new CompletedCourse("C102", "Reading", "GNED", "Reading and writting skills", 67),
       new CompletedCourse("C108", "Web Design Basics", "IT", "HTML, CSS and Javascript", 86),
     ]),
-  new Student(102, "Ana", "Media", 2, [0, 2, 3, 1].map(x => onGoingCourses[x]),
+  new Student(102, "Ana", "Media", 2, [0, 5, 1].map(x => onGoingCourses[x]),
     [
       new CompletedCourse("C102", "Reading", "GNED", "Reading and writting skills", 89),
       new CompletedCourse("C103", "Maths", "Exact Sciences", "Basic calculus", 95),
@@ -53,7 +52,7 @@ router.get('/students', function (req, res, next) {
 
 router.get('/ongoing-courses', function (req, res, next) {
   res.render('ongoingCourses', {
-    onGoingCourses: onGoingCourses,
+    courses: onGoingCourses,
   });
 });
 
@@ -62,9 +61,60 @@ router.get('/search-ongoing', function (req, res, next) {
 });
 
 router.post('/search-ongoing', function (req, res, next) {
-  console.log(req.params);
+  id = req.body.id;
+  name = req.body.name;
+  department = req.body.department;
+  isOpen = req.body.isOpen;
+  courses = onGoingCourses;
+
+  if (id) {
+    courses = courses.filter(course => course.id === id);
+  }
+  if (name) {
+    courses = courses.filter(course => course.name === name);
+  }
+  if (isOpen) {
+    courses = courses.filter(course => course.remainingSeats !== 0);
+  }
+  if (department) {
+    courses = courses.filter(course => course.department === department);
+  }
+
   res.render('searchedCourses', {
-    body: req.body
+    courses: courses
+  });
+});
+
+router.get('/search-student', function (req, res, next) {
+  res.render('searchStudent');
+});
+
+router.post('/search-student', function (req, res, next) {
+  id = req.body.id;
+  name = req.body.name;
+  enrolledCourse = req.body.enrolledCourse ? true : false;
+  completedCourse = req.body.completedCourse ? true : false;
+  studentsRender = students;
+
+  if (id && enrolledCourse) {
+    console.log("1")
+    studentsRenderize = studentsRender.filter((st) => st.coursesEnrolled.find(course => course.id === id))
+  }
+  if (id && completedCourse) {
+    console.log("2")
+    studentsRenderize = studentsRender.filter((st) => st.coursesCompleted.find(course => course.id === id))
+  }
+  if (name && enrolledCourse) {
+    console.log("3")
+    studentsRenderize = studentsRender.filter((st) => st.coursesEnrolled.find(course => course.name === name))
+  }
+  if (name && completedCourse) {
+    console.log("4")
+    studentsRenderize = studentsRender.filter((st) => st.coursesCompleted.find(course => course.name === name))
+  }
+
+  res.render('searchedStudents', {
+    students: studentsRenderize,
   });
 });
 
